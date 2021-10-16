@@ -1,7 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:minWidth="25dp"
+    android:minHeight="25dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/linearLayout1"
+        android:id="@+id/linearLayout2">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25dp"
+            android:minHeight="25dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:gravity="fill_horizontal"
+            android:padding="5dp">
+            <TextView
+                android:text="@string/number1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/textView1"
+                android:layout_weight="0.5"
+                android:textSize="18dp" />
+            <TextView
+                android:text="@string/number2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/textView1"
+                android:layout_weight="0.5"
+                android:textSize="18dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25dp"
+            android:minHeight="25dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:gravity="fill_horizontal"
+            android:padding="5dp">
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/number1"
+                android:gravity="right"
+                android:layout_weight="0.5" />
+            <EditText
+                android:inputType="numberDecimal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/number2"
+                android:gravity="right"
+                android:layout_weight="0.5" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25dp"
+            android:minHeight="25dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:gravity="fill_horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="25dp">
+            <Button
+                android:text="@string/ADD"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/add_Button"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+            <Button
+                android:text="@string/SUB"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/subtract_Button"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+            <Button
+                android:text="@string/DIV"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/divide_Button"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+            <Button
+                android:text="@string/MLT"
+                android:layout_width="fill_parent"
+                android:layout_weight="0.5"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/multiply_Button"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25dp"
+            android:minHeight="25dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout1"
+            android:gravity="fill_horizontal"
+            android:padding="5dp">
+            <TextView
+                android:text="@string/answerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/textView1"
+                android:textSize="18dp"
+                android:paddingRight="5dp" />
+            <TextView
+                android:text="N/A"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/linearLayout2"
+                android:id="@+id/textView1"
+                android:layout_weight="0.5"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
