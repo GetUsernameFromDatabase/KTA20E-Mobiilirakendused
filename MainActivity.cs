@@ -10,7 +10,7 @@ namespace FirstApp
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        EditText[] calcNumbers = new EditText[2];
+        readonly EditText[] calcNumbers = new EditText[2];
         TextView calculationResult;
 
         protected override void OnCreate(Bundle savedInstanceState)
@@ -24,10 +24,10 @@ namespace FirstApp
             this.calcNumbers[1] = FindViewById<EditText>(Resource.Id.number2);
             this.calculationResult = FindViewById<TextView>(Resource.Id.calcResult);
 
-            addEventsToButtons();
+            AddEventsToButtons();
 
         }
-        private void addEventsToButtons()
+        private void AddEventsToButtons()
         {
             Button addButton = FindViewById<Button>(Resource.Id.add_Button);
             Button subButton = FindViewById<Button>(Resource.Id.subtract_Button);
@@ -36,19 +36,19 @@ namespace FirstApp
 
             addButton.Click += (obj, e) =>
             {
-                calculationResult.Text = getCalculatorResult(getCalculatorInput(), new[] { '+' });
+                calculationResult.Text = GetCalculatorResult(GetCalculatorInput(), new[] { '+' });
             };
             subButton.Click += (obj, e) =>
             {
-                calculationResult.Text = getCalculatorResult(getCalculatorInput(), new[] { '-' });
+                calculationResult.Text = GetCalculatorResult(GetCalculatorInput(), new[] { '-' });
             };
             mltButton.Click += (obj, e) =>
             {
-                calculationResult.Text = getCalculatorResult(getCalculatorInput(), new[] { '*' });
+                calculationResult.Text = GetCalculatorResult(GetCalculatorInput(), new[] { '*' });
             };
             divButton.Click += (obj, e) =>
             {
-                calculationResult.Text = getCalculatorResult(getCalculatorInput(), new[] { '/' });
+                calculationResult.Text = GetCalculatorResult(GetCalculatorInput(), new[] { '/' });
             };
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -58,7 +58,7 @@ namespace FirstApp
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        private double[] getCalculatorInput()
+        private double[] GetCalculatorInput()
         {
             var calcNumberLength = calcNumbers.Length;
             var output = new double[calcNumberLength];
@@ -69,7 +69,7 @@ namespace FirstApp
             return output;
         }
 
-        private string getCalculatorResult(double[] numbers, char[] operations)
+        private string GetCalculatorResult(double[] numbers, char[] operations)
         {
             var result = numbers[0];
             string resultString = result.ToString();
