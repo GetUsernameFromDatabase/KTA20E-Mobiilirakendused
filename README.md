@@ -2,9 +2,9 @@
 First mobile app made with Xamarin - school assignement
 
 ## Examples
-### Picture of layout for Nexus4
+### Layout picture for Nexus4
 ![](./Example/Nexus4-Layout.png)
 
-### Picture of Pixel 2 emulator
+### Picture of an emulator Pixel 2
 ![](./Example/Pixel2-EmulatorPic.png)
 
