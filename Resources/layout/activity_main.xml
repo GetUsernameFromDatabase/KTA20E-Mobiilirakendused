@@ -13,7 +13,7 @@
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
         <LinearLayout
             android:id="@+id/calcInputDescription_LinearLayout"
             android:orientation="horizontal"
@@ -64,7 +64,7 @@
                 android:layout_weight="0.5" />
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/linearLayout1"
+            android:id="@+id/buttons_LinearLayout"
             android:orientation="horizontal"
             android:minWidth="25dp"
             android:minHeight="25dp"
@@ -113,16 +113,16 @@
             android:minWidth="25dp"
             android:minHeight="25dp"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="fill_horizontal"
+            android:layout_height="fill_parent"
+            android:gravity="center"
             android:padding="5dp">
             <TextView
                 android:id="@+id/calcResult"
-                android:text="N/A"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:textSize="18dp" />
+                android:text="@string/initialResult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="24dp"
+                android:gravity="center_horizontal" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
