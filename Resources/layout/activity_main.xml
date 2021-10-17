@@ -103,7 +103,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:padding="padding">
+        android:padding="@dimen/abc_control_padding_material">
         <TextView
             android:id="@+id/calcResult"
             android:text="@string/initialResult"
