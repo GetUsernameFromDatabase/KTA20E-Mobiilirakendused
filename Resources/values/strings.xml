@@ -3,7 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="number1">Esimene number</string>
     <string name="number2">Teine number</string>
-    <string name="answerLabel">Vastus:</string>
     <string name="ADD">+</string>
     <string name="SUB">-</string>
     <string name="DIV">/</string>
