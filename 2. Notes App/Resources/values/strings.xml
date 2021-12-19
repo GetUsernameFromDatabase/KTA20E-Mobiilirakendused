@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NotesApp</string>
+    <string name="action_settings">Settings</string>
+	<string name="save">Save</string>
+	<string name="delete">Delete</string>
+	<string name="addNew">Add New</string>
+	<string name="SmallTextTest">TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_TestingSmallText_END</string>
+</resources>

@@ -1,10 +1,32 @@
-# Calculator app
-First mobile app made with Xamarin - school assignement
+# Moobilirakendused
+Mobile applications made for school assignements.  
 
-## Examples
-### Layout picture for Nexus4
-![](./Example/Nexus4-Layout.png)
+All applications made using Xamarin  
+Example images made using Google Pixel 2 emulator (9.0 (Pie) - API 28)
 
-### Picture of an emulator Pixel 2
-![](./Example/Pixel2-EmulatorPic.png)
+## Calculator App
+First application - a simple calculator app.
+
+### Examples
+#### Main
+![](./+Examples/Calculator/Main_Pixel2.png)
+#### Calculation
+![](./+Examples/Calculator/Calculation_Pixel2.png)
+
+
+## Notes App
+App that saves and displays notes.
+
+### Examples
+#### Main
+![](./+Examples/Notes/Main_Pixel2.png)
+#### Note Edit
+![](./+Examples/Notes/NoteEdit_Pixel2.png)
+
+
+## Weather App
+Make a weather app that gives current weather information and shows 5 weather forecast for the desired city.
+
+#### Examples
+TODO
 
