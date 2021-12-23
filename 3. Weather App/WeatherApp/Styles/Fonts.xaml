@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="WeatherApp.Styles.Fonts">
+    <OnPlatform
+      x:Key="ButtonIconSize"
+      x:TypeArguments="x:Double"
+      Android="21"
+      iOS="21" />
+    <OnPlatform
+      x:Key="HeaderSection"
+      x:TypeArguments="x:Double"
+      Android="21"
+      iOS="21" />
+    <OnPlatform
+      x:Key="Header1"
+      x:TypeArguments="x:Double"
+      Android="18"
+      iOS="18" />
+    <OnPlatform
+      x:Key="MainTemperature"
+      x:TypeArguments="x:Double"
+      Android="69"
+      iOS="69" />
+    <OnPlatform
+      x:Key="MainTemperatureUnit"
+      x:TypeArguments="x:Double"
+      Android="34"
+      iOS="34" />
+    <OnPlatform
+      x:Key="MainDescription"
+      x:TypeArguments="x:Double"
+      Android="17"
+      iOS="17" />
+    <OnPlatform
+      x:Key="MainDate"
+      x:TypeArguments="x:Double"
+      Android="15"
+      iOS="15" />
+    <OnPlatform
+      x:Key="DetailedViewValue"
+      x:TypeArguments="x:Double"
+      Android="14"
+      iOS="14" />
+    <OnPlatform
+      x:Key="DetailedViewDescription"
+      x:TypeArguments="x:Double"
+      Android="11"
+      iOS="11" />
+    <OnPlatform
+      x:Key="DailyForecastDate"
+      x:TypeArguments="x:Double"
+      Android="14"
+      iOS="14" />
+    <OnPlatform
+      x:Key="DailyForecastTempValue"
+      x:TypeArguments="x:Double"
+      Android="25"
+      iOS="25" />
+    <OnPlatform
+      x:Key="DailyForecastTempUnit"
+      x:TypeArguments="x:Double"
+      Android="15"
+      iOS="15" />
+</ResourceDictionary>

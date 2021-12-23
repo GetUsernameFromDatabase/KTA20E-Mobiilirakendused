@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             mc:Ignorable="d"
-             
-             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="SlideFromRight"
-             xmlns:fragments="clr-namespace:WeatherApp.Views.Fragments"
              xmlns:sharedTransitions="clr-namespace:Plugin.SharedTransitions;assembly=Plugin.SharedTransitions"
-             x:Class="WeatherApp.MainPageView">
+             xmlns:viewmodels="clr-namespace:WeatherApp.ViewModels"
+             xmlns:fragments="clr-namespace:WeatherApp.Views.Fragments"
+             mc:Ignorable="d"
+             sharedTransitions:SharedTransitionNavigationPage.BackgroundAnimation="SlideFromRight"
+             x:Class="WeatherApp.MainPage">
+    <d:ContentPage.BindingContext>
+        <viewmodels:MainPageViewModel />
+    </d:ContentPage.BindingContext>
     <xct:SideMenuView
             x:Name="menuView"
             HorizontalOptions="FillAndExpand"
@@ -18,121 +21,147 @@
             GestureThreshold="10000">
         <fragments:SideMenuView
                 xct:SideMenuView.Position="LeftMenu"
-                xct:SideMenuView.MenuWidthPercentage=".6"/>
-        <!--#region MainInfo -->
-        <Grid VerticalOptions="FillAndExpand" BackgroundColor="GhostWhite">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Image Source="overlay.png" Aspect="Fill" HeightRequest="300" VerticalOptions="StartAndExpand"/>
+                xct:SideMenuView.MenuWidthPercentage=".6" />
+        <RefreshView
+                IsRefreshing="{Binding IsRefreshing}"
+                RefreshColor="{StaticResource PrimaryColor}"
+                Command="{Binding RefreshCommand}">
+            <ScrollView>
+                <!--#region MainInfo -->
+                <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource PageBackgroundColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Image Source="overlay.png" Aspect="Fill" HeightRequest="300" VerticalOptions="StartAndExpand" />
 
-            <StackLayout Orientation="Horizontal" Spacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="20,50">
-                <StackLayout
-                            Grid.Row="1"
-                            Margin="16, 3, 16, 0"
-                            Padding="0, 8, 8, 8"
-                            HorizontalOptions="Start"
-                            Orientation="Horizontal">
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding MenuCommand}"/>
-                    </StackLayout.GestureRecognizers>
-                    <Label Text="&#xf0c9;" FontSize="21" FontFamily="FontAwesome" HorizontalOptions="Start" TextColor="GhostWhite"/>
-                </StackLayout>
-                <Label Text="{Binding MainInfo.City.FullName}" FontSize="16" VerticalOptions="Center" TextColor="White"/>
-                <ImageButton Source="refresh.png" WidthRequest="24" HeightRequest="24" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Vertical" Margin="0,20" HorizontalOptions="Center" VerticalOptions="Center">
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Image Source="weather.png" WidthRequest="50" HeightRequest="50" VerticalOptions="Center"/>
-                    <Label Text="{Binding MainInfo.Temperature.Value}" TextColor="White" FontSize="70" FontAttributes="Bold" VerticalOptions="Center"/>
-                    <Label Text="{Binding MainInfo.Temperature.Unit}" TextColor="White" FontSize="34" VerticalOptions="Center"/>
-                </StackLayout>
-                <Label Text="{Binding MainInfo.Description}" TextColor="White" FontSize="17" HorizontalOptions="Center"/>
-                <Label Text="{Binding MainInfo.DateDisplay}" TextColor="White" FontSize="15" HorizontalOptions="Center"/>
-            </StackLayout>
-            <!--#endregion-->
-
-            <!--#region DetailedView -->
-            <Frame Grid.Row="1" HasShadow="True" CornerRadius="10" Margin="20,-40,20,0" Padding="0" HeightRequest="120" VerticalOptions="Start">
-                <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                        <Image Source="humidity.png" HeightRequest="25" HorizontalOptions="Center"/>
-                        <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding DetailedInfo.Humidity, StringFormat='{0}%'}" TextColor="Black" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            <Label Text="Humidity" TextColor="#7D7D7D" FontSize="11" HorizontalOptions="Center"/>
+                    <StackLayout Orientation="Horizontal" Spacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="Start" Margin="20,50">
+                        <StackLayout Grid.Row="1"  HorizontalOptions="Start" Orientation="Horizontal"
+                                     Margin="16, 3, 0, 0" Padding="0, 8, 8, 8">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MenuCommand}" />
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="&#xf0c9;" TextColor="{StaticResource PageBackgroundColor}" HorizontalOptions="Start"
+                                   FontSize="{StaticResource ButtonIconSize}" FontFamily="FontAwesome" />
+                        </StackLayout>
+                        <Label Text="{Binding MainInfo.City.FullName}" TextColor="{StaticResource PageBackgroundColor}"
+                               FontSize="{StaticResource Header1}" VerticalOptions="Center" />
+                        <StackLayout Grid.Row="1"  HorizontalOptions="EndAndExpand" Orientation="Horizontal"
+                                     Margin="0, 3, 0, 0" Padding="0, 8, 8, 8">
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RefreshCommand}" />
+                            </StackLayout.GestureRecognizers>
+                            <Label Text="&#xf01e;" TextColor="{StaticResource PageBackgroundColor}" HorizontalOptions="Start"
+                                   FontSize="{StaticResource ButtonIconSize}" FontFamily="FontAwesome" />
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                        <Image Source="wind.png" HeightRequest="25" HorizontalOptions="Center"/>
-                        <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding DetailedInfo.Wind.Display}" TextColor="Black" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            <Label Text="Wind" TextColor="#7D7D7D" FontSize="11" HorizontalOptions="Center"/>
+                    <StackLayout Orientation="Vertical" Margin="0,20" HorizontalOptions="Center" VerticalOptions="Center">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                            <Image Source="weather.png" WidthRequest="50" HeightRequest="50" VerticalOptions="Center" />
+                            <Label Text="{Binding MainInfo.Temperature.Value}" TextColor="{StaticResource PageBackgroundColor}"
+                                   FontSize="{StaticResource MainTemperature}" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Label Text="{Binding MainInfo.Temperature.Unit}" TextColor="{StaticResource PageBackgroundColor}"
+                                   FontSize="{StaticResource MainTemperatureUnit}" VerticalOptions="Center" />
                         </StackLayout>
+                        <Label Text="{Binding MainInfo.Description}" TextColor="{StaticResource PageBackgroundColor}"
+                               FontSize="{StaticResource MainDescription}" HorizontalOptions="Center" />
+                        <Label Text="{Binding MainInfo.DateDisplay}" TextColor="{StaticResource PageBackgroundColor}"
+                               FontSize="{StaticResource MainDate}" HorizontalOptions="Center" />
                     </StackLayout>
+                    <!--#endregion-->
 
-                    <StackLayout Grid.Column="2" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                        <Image Source="pressure.png" HeightRequest="25" HorizontalOptions="Center"/>
-                        <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding DetailedInfo.Pressure.Display}" TextColor="Black" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            <Label Text="Pressure" TextColor="#7D7D7D" FontSize="11" HorizontalOptions="Center"/>
-                        </StackLayout>
+                    <!--#region DetailedView -->
+                    <Frame Grid.Row="1" HasShadow="True" CornerRadius="10" Margin="20,-40,20,0" Padding="0" HeightRequest="120" VerticalOptions="Start">
+                        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+                                <Image Source="humidity.png" HeightRequest="25" HorizontalOptions="Center" />
+                                <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding DetailedInfo.Humidity, StringFormat='{0}%'}" TextColor="{StaticResource PrimaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Humidity" TextColor="{StaticResource SecondaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+                                <Image Source="wind.png" HeightRequest="25" HorizontalOptions="Center" />
+                                <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding DetailedInfo.Wind.Display}" TextColor="{StaticResource PrimaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Wind" TextColor="{StaticResource SecondaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="2" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+                                <Image Source="pressure.png" HeightRequest="25" HorizontalOptions="Center" />
+                                <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding DetailedInfo.Pressure.Display}" TextColor="{StaticResource PrimaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Pressure" TextColor="{StaticResource SecondaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout Grid.Column="3" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+                                <Image Source="cloudiness.png" HeightRequest="25" HorizontalOptions="Center" />
+                                <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding DetailedInfo.Cloudiness, StringFormat='{0}%'}" TextColor="{StaticResource PrimaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                                    <Label Text="Cloudiness" TextColor="{StaticResource SecondaryTextColor}"
+                                           FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                    <!--#endregion-->
+
+                    <!--#region DailyWeatherForecasts -->
+                    <StackLayout Grid.Row="2" BackgroundColor="Transparent" Orientation="Horizontal" Margin="20, 20, 0, 0" HorizontalOptions="Start">
+                        <Label Text="Daily" FontSize="{StaticResource HeaderSection}" VerticalOptions="Center" TextColor="{StaticResource PrimaryColor}" />
                     </StackLayout>
+                    <ListView x:Name="WeatherForecastList" ItemsSource="{Binding WeatherForecasts}" SeparatorVisibility="None"
+                              Grid.Row="3" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
+                                        <Grid HeightRequest="50" MinimumHeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
 
-                    <StackLayout Grid.Column="3" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
-                        <Image Source="cloudiness.png" HeightRequest="25" HorizontalOptions="Center"/>
-                        <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
-                            <Label Text="{Binding DetailedInfo.Cloudiness, StringFormat='{0}%'}" TextColor="Black" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center"/>
-                            <Label Text="Cloudiness" TextColor="#7D7D7D" FontSize="11" HorizontalOptions="Center"/>
-                        </StackLayout>
-                    </StackLayout>
+                                            <Label Text="{Binding DateDisplay}" TextColor="{StaticResource SecondaryTextColor}"
+                                                   FontSize="{StaticResource DailyForecastDate}" VerticalOptions="Center" Margin="20,0" />
 
+                                            <Image Grid.Column="1" Source="{Binding IconPath}" WidthRequest="38" HeightRequest="38" HorizontalOptions="Center" VerticalOptions="Center" />
+
+                                            <StackLayout Grid.Column="2" HeightRequest="50" Orientation="Horizontal" Margin="20,0" HorizontalOptions="End" VerticalOptions="Center">
+                                                <Label Text="{Binding Temperature.Value}" TextColor="{StaticResource PrimaryTextColor}"
+                                                       FontSize="{StaticResource DailyForecastTempValue}" FontAttributes="Bold" VerticalOptions="Start" />
+                                                <Label Text="{Binding Temperature.Unit}" TextColor="{StaticResource PrimaryTextColor}"
+                                                       FontSize="{StaticResource DailyForecastTempUnit}" VerticalOptions="Center" />
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <!--#endregion-->
                 </Grid>
-            </Frame>
-            <!--#endregion-->
-
-            <!--#region DetailedView -->
-            <StackLayout Grid.Row="2" BackgroundColor="Transparent" Orientation="Horizontal" Margin="20, 20, 0, 0" HorizontalOptions="Start">
-                <Label Text="Daily" FontSize="21" VerticalOptions="Center" TextColor="#552E9C"/>
-            </StackLayout>
-            <ListView x:Name="WeatherForecastList" ItemsSource="{Binding WeatherForecasts}" SeparatorVisibility="None"
-                  Grid.Row="3" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate >
-                        <ViewCell>
-                            <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
-                                <Grid HeightRequest="50" MinimumHeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Label Text="{Binding DateDisplay}" TextColor="#757575" FontSize="14" VerticalOptions="Center" Margin="20,0"/>
-
-                                    <Image Grid.Column="1" Source="{Binding Parent.IconPath}" WidthRequest="38" HeightRequest="38" HorizontalOptions="Center" VerticalOptions="Center"/>
-
-                                    <StackLayout Grid.Column="2" HeightRequest="50" Orientation="Horizontal" Margin="20,0" HorizontalOptions="End" VerticalOptions="Center">
-                                        <Label Text="{Binding Temperature.Value}" TextColor="Black" FontSize="25" FontAttributes="Bold" VerticalOptions="Start"/>
-                                        <Label Text="{Binding Temperature.Unit}" TextColor="Black" FontSize="15" VerticalOptions="Center"/>
-                                    </StackLayout>
-                                </Grid>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <!--#endregion-->
-        </Grid>
+            </ScrollView>
+        </RefreshView>
     </xct:SideMenuView>
 </ContentPage>

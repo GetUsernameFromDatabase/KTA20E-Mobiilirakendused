@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http;
 using System;
-using WeatherApp.Models.Responses;
+using System.Net.Http;
 using System.Threading.Tasks;
+using WeatherApp.Models.Responses;
 
 namespace WeatherApp.Services
 {
-    class WeatherService
+    internal class WeatherService
     {
         private readonly string BaseURL = @"https://api.openweathermap.org/data/2.5/";
         private readonly string ApiKey = "148ff5a63e92f025856f0912aacd4b80";

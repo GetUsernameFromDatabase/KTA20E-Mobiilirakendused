@@ -8,6 +8,7 @@ namespace WeatherApp.Models.Weather
         public static readonly string Imperial = "mph";
 
         public string[] Units => new string[2] { Metric, Imperial };
+
         public Func<double, bool, double>[] UnitConversions => new Func<double, bool, double>[]
         {
             Metric_Imperial,

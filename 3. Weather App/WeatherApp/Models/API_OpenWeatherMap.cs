@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WeatherApp.Models.Responses
+﻿namespace WeatherApp.Models.Responses
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "JSON Response")]
     public class OWM_5Day3HourForecast

@@ -1,7 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using WeatherApp.Models;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using WeatherApp.Models;
-using System;
 
 namespace WeatherApp.Views.Fragments
 {

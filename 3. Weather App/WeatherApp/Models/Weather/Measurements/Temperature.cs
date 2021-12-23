@@ -9,6 +9,7 @@ namespace WeatherApp.Models.Weather
         public static readonly string Fahrenheit = "°F";
 
         public string[] Units => new string[3] { Kelvin, Celsius, Fahrenheit };
+
         public Func<double, bool, double>[] UnitConversions => new Func<double, bool, double>[]
         {
             Kelvin_Celsius,
@@ -40,4 +41,3 @@ namespace WeatherApp.Models.Weather
         }
     }
 }
-

@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 [assembly: ExportFont("FontAwesome.ttf", Alias = "FontAwesome")]
 
@@ -11,8 +9,7 @@ namespace WeatherApp
         public App()
         {
             InitializeComponent();
-
-            MainPage = new MainPageView();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()

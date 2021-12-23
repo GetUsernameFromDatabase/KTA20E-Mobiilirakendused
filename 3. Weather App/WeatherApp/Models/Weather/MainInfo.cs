@@ -1,6 +1,4 @@
-﻿using System;
-using WeatherApp.Models.Weather;
-using WeatherApp.Models;
+﻿using WeatherApp.Models.Weather;
 
 namespace WeatherApp.Models
 {

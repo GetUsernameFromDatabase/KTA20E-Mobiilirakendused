@@ -1,5 +1,5 @@
-﻿using WeatherApp.Models.Weather;
-using WeatherApp.Converters;
+﻿using WeatherApp.Converters;
+using WeatherApp.Models.Weather;
 
 namespace WeatherApp.Models
 {
