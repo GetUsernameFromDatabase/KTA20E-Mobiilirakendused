@@ -25704,31 +25704,85 @@ namespace WeatherApp.Droid
 			public const int overlay = 2131165544;
 			
 			// aapt resource value: 0x7F070169
-			public const int place = 2131165545;
+			public const int OWM_01d = 2131165545;
 			
 			// aapt resource value: 0x7F07016A
-			public const int preference_list_divider_material = 2131165546;
+			public const int OWM_01n = 2131165546;
 			
 			// aapt resource value: 0x7F07016B
-			public const int pressure = 2131165547;
+			public const int OWM_02d = 2131165547;
 			
 			// aapt resource value: 0x7F07016C
-			public const int settings = 2131165548;
+			public const int OWM_02n = 2131165548;
 			
 			// aapt resource value: 0x7F07016D
-			public const int test_custom_background = 2131165549;
+			public const int OWM_03d = 2131165549;
 			
 			// aapt resource value: 0x7F07016E
-			public const int tooltip_frame_dark = 2131165550;
+			public const int OWM_03n = 2131165550;
 			
 			// aapt resource value: 0x7F07016F
-			public const int tooltip_frame_light = 2131165551;
+			public const int OWM_04d = 2131165551;
 			
 			// aapt resource value: 0x7F070170
-			public const int weather = 2131165552;
+			public const int OWM_04n = 2131165552;
 			
 			// aapt resource value: 0x7F070171
-			public const int wind = 2131165553;
+			public const int OWM_09d = 2131165553;
+			
+			// aapt resource value: 0x7F070172
+			public const int OWM_09n = 2131165554;
+			
+			// aapt resource value: 0x7F070173
+			public const int OWM_10d = 2131165555;
+			
+			// aapt resource value: 0x7F070174
+			public const int OWM_10n = 2131165556;
+			
+			// aapt resource value: 0x7F070175
+			public const int OWM_11d = 2131165557;
+			
+			// aapt resource value: 0x7F070176
+			public const int OWM_11n = 2131165558;
+			
+			// aapt resource value: 0x7F070177
+			public const int OWM_13d = 2131165559;
+			
+			// aapt resource value: 0x7F070178
+			public const int OWM_13n = 2131165560;
+			
+			// aapt resource value: 0x7F070179
+			public const int OWM_50d = 2131165561;
+			
+			// aapt resource value: 0x7F07017A
+			public const int OWM_50n = 2131165562;
+			
+			// aapt resource value: 0x7F07017B
+			public const int place = 2131165563;
+			
+			// aapt resource value: 0x7F07017C
+			public const int preference_list_divider_material = 2131165564;
+			
+			// aapt resource value: 0x7F07017D
+			public const int pressure = 2131165565;
+			
+			// aapt resource value: 0x7F07017E
+			public const int settings = 2131165566;
+			
+			// aapt resource value: 0x7F07017F
+			public const int test_custom_background = 2131165567;
+			
+			// aapt resource value: 0x7F070180
+			public const int tooltip_frame_dark = 2131165568;
+			
+			// aapt resource value: 0x7F070181
+			public const int tooltip_frame_light = 2131165569;
+			
+			// aapt resource value: 0x7F070182
+			public const int weather = 2131165570;
+			
+			// aapt resource value: 0x7F070183
+			public const int wind = 2131165571;
 			
 			static Drawable()
 			{

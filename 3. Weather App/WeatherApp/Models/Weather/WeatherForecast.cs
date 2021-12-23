@@ -11,11 +11,11 @@ namespace WeatherApp.Models
         public Date MyDate { get; private set; }
         public string DateDisplay => MyDate.Short;
 
-        public WeatherForecast(Temperature Temperature, double unixTime, string icon = "Error")
+        public WeatherForecast(Temperature Temperature, double unixTime, string icon = null)
         {
             this.Temperature = Temperature;
             this.MyDate = new Date(Time.UnixTimeStampToDateTime(unixTime));
-            this.IconPath = icon == "Error" ? "Loading.gif" : "OWM_" + icon + "-2x.png";
+            if (icon != null) this.IconPath = Icons.GetWeatherIcon(icon);
         }
     }
 }

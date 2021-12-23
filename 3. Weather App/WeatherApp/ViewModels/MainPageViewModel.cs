@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WeatherApp.Models;
@@ -33,8 +32,8 @@ namespace WeatherApp.ViewModels
 
         public MainPageViewModel(MainPage Page)
         {
-            RefreshCommand = new Command(RefreshCommandHandler);
             MenuCommand = new Command(Page.OpenCloseMenu);
+            RefreshCommand = new Command(RefreshCommandHandler);
             GetCurrentWeather().ContinueWith((task) => task);
         }
 
@@ -60,7 +59,6 @@ namespace WeatherApp.ViewModels
 
             await GetCurrentWeather();
             IsRefreshing = false;
-            Debug.WriteLine(IsRefreshing.ToString());
         }
 
         #endregion Command Handlers
@@ -89,7 +87,7 @@ namespace WeatherApp.ViewModels
             var city = new City() { Name = "London", Country = "GB" };
             var date = new Date(new DateTime(2019, 6, 15, 9, 3, 0));
             var desc = "Light intensity drizzle rain";
-            return new MainInfo(city, temp, date) { Description = desc };
+            return new MainInfo(city, temp, date, "09d") { Description = desc };
         }
 
         private DetailedInfo MockDetailedInfo()
@@ -110,11 +108,11 @@ namespace WeatherApp.ViewModels
             List<WeatherForecast> weatherList = new List<WeatherForecast>
             {
                 new WeatherForecast(new Temperature(295.15, TempUnit), 1560679200, "10d"),
-                new WeatherForecast(new Temperature(294.15, TempUnit), 1560765600, "10d"),
-                new WeatherForecast(new Temperature(293.15, TempUnit), 1560852000, "10d"),
-                new WeatherForecast(new Temperature(285.15, TempUnit), 1560938400, "10d"),
+                new WeatherForecast(new Temperature(294.15, TempUnit), 1560765600, "09d"),
+                new WeatherForecast(new Temperature(293.15, TempUnit), 1560852000, "04d"),
+                new WeatherForecast(new Temperature(285.15, TempUnit), 1560938400, "04d"),
                 new WeatherForecast(new Temperature(290.15, TempUnit), 1561024800, "10d"),
-                new WeatherForecast(new Temperature(293.15, TempUnit), 1561111200, "10d"),
+                new WeatherForecast(new Temperature(293.15, TempUnit), 1561111200, "09d"),
             };
 
             foreach (var item in weatherList)
