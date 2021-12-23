@@ -1,7 +1,7 @@
 # Moobilirakendused
 Mobile applications made for school assignements.  
 
-All applications made using Xamarin  
+All applications made using Xamarin and for Android only.
 Example images made using Google Pixel 2 emulator (9.0 (Pie) - API 28)
 
 ## Calculator App
