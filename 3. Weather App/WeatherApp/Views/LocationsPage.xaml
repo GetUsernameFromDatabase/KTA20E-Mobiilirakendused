@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:fragments="clr-namespace:WeatherApp.Views.Fragments"
+             xmlns:templateSelector="clr-namespace:WeatherApp.Helpers.TemplateSelector"
+             xmlns:viewmodels="clr-namespace:WeatherApp.ViewModels"
+             x:DataType="viewmodels:LocationsPageViewModel"
+             x:Class="WeatherApp.Views.LocationsPage">
+    <NavigationPage.TitleView>
+        <StackLayout>
+            <Label Text="Locations" FontSize="{StaticResource HeaderSection}" 
+                   TextColor="{StaticResource PageBackgroundColor}" />
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <templateSelector:LocationTemplateSelector x:Key="LocationTemplateSelector" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid
+                BackgroundColor="{StaticResource PageBackgroundColor}"
+                xct:StateLayout.CurrentState="{Binding MainState}"
+                xct:StateLayout.AnimateStateChanges="True"
+                RowDefinitions="Auto, Auto, Auto, *"
+                Padding="0, 20"
+                RowSpacing="0">
+                <xct:StateLayout.StateViews>
+                    <xct:StateView
+                        StateKey="Loading"
+                        VerticalOptions="FillAndExpand">
+                        <fragments:LoadingView />
+                    </xct:StateView>
+                </xct:StateLayout.StateViews>
+                <FlexLayout
+                    Grid.Row="3"
+                    BindableLayout.ItemsSource="{Binding Locations}"
+                    BindableLayout.ItemTemplateSelector="{StaticResource LocationTemplateSelector}"
+                    Wrap="Wrap"
+                    Direction="Row"
+                    JustifyContent="Start"
+                    AlignItems="Start"
+                    AlignContent="Start"
+                    Margin="16, 8, 16, 0">
+                </FlexLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

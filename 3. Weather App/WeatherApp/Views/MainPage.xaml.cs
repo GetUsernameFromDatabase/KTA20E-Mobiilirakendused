@@ -1,5 +1,9 @@
-﻿using WeatherApp.ViewModels;
+﻿using Rg.Plugins.Popup.Services;
+using System.Threading.Tasks;
+using WeatherApp.ViewModels;
+using WeatherApp.Views.Dialogs;
 using Xamarin.CommunityToolkit.UI.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +16,16 @@ namespace WeatherApp
         {
             BindingContext = new MainPageViewModel(this);
             InitializeComponent();
+            ShowLocationDialogueIfNeeded();
+        }
+
+        private async void ShowLocationDialogueIfNeeded()
+        {
+            var locations = await SecureStorage.GetAsync("locations");
+            if (locations == null)
+            {
+                await PopupNavigation.Instance.PushAsync(new AddLocationDialog());
+            }
         }
 
         #region Command Handlers

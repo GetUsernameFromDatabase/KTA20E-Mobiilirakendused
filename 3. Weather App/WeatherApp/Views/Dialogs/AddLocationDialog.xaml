@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:fragments="clr-namespace:WeatherApp.Views.Fragments"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:dialogs="clr-namespace:WeatherApp.ViewModels.Dialogs" x:DataType="dialogs:AddLocationDialogViewModel"
+                 x:Class="WeatherApp.Views.Dialogs.AddLocationDialog">
+
+    <Frame
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="Center"
+        BackgroundColor="{StaticResource PageBackgroundColor}"
+        CornerRadius="24" Margin="25,0">
+        <StackLayout
+        xct:StateLayout.CurrentState="{Binding MainState}"
+        xct:StateLayout.AnimateStateChanges="True">
+            <xct:StateLayout.StateViews>
+                <xct:StateView
+                StateKey="Loading"
+                VerticalOptions="FillAndExpand">
+                    <fragments:LoadingView />
+                </xct:StateView>
+            </xct:StateLayout.StateViews>
+            <Label Text="Add new location"
+               TextColor="{StaticResource PrimaryTextColor}"
+               FontSize="{StaticResource HeadlineFontSize}"
+               FontFamily="FrankRuhle_Medium"
+               HorizontalOptions="StartAndExpand" />
+            <Frame
+            HasShadow="False"
+            Padding="4"
+            CornerRadius="24"
+            Margin="0, 8, 0, 8"
+            BackgroundColor="{StaticResource CardBackgroundColor}">
+                <Entry
+                x:Name="locationName"
+                Margin="8, 0, 8, 0"
+                Placeholder="Name of the location..."
+                PlaceholderColor="{StaticResource InactiveColor}"
+                TextColor="{StaticResource SecondaryTextColor}">
+                    <Entry.Effects>
+                        <xct:RemoveBorderEffect></xct:RemoveBorderEffect>
+                    </Entry.Effects>
+                </Entry>
+            </Frame>
+            <Label
+            Margin="0, 0, 0, 8"
+            IsVisible="{Binding HasError}"
+            Text="Unfortunately, we can't find this location. You can try something like New York"
+            TextColor="{StaticResource FailColor}" />
+            <Button
+            Text="ADD LOCATION"
+            FontFamily="Barlow_Medium"
+            FontSize="{StaticResource ButtonFontSize}"
+            BackgroundColor="{StaticResource PrimaryColor}"
+            TextColor="{StaticResource PageBackgroundColor}"
+            Padding="8, 0, 8, 0"
+            Command="{Binding UseCurrentLocationCommand}"
+            CommandParameter="{Binding Text, Source={x:Reference locationName}}"
+            CornerRadius="36" />
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

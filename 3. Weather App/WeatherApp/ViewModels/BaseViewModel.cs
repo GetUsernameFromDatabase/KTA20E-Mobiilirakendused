@@ -10,9 +10,7 @@ namespace WeatherApp.ViewModels
     {
         #region Properties
 
-        public Dictionary<string, ICommand> Commands { get; protected set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged; // Managed by PropertyChanged.Fody
 
         public string Title { get; set; }
         public LayoutState MainState { get; set; }
@@ -24,14 +22,6 @@ namespace WeatherApp.ViewModels
         {
             Connectivity.ConnectivityChanged += ConnectivityChanged;
             HasNoInternetConnection = !Connectivity.NetworkAccess.Equals(NetworkAccess.Internet);
-            Commands = new Dictionary<string, ICommand>();
-        }
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            var handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #region Internet Connection
@@ -42,15 +32,5 @@ namespace WeatherApp.ViewModels
         }
 
         #endregion Internet Connection
-
-        #region IPageLifecycleAware
-
-        public virtual void OnAppearing()
-        { }
-
-        public virtual void OnDisappearing()
-        { }
-
-        #endregion IPageLifecycleAware
     }
 }

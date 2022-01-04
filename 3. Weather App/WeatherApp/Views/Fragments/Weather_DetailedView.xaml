@@ -1,0 +1,59 @@
+﻿<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:fragments="clr-namespace:WeatherApp.Views.Fragments"
+       x:DataType="fragments:Weather_DetailedView"
+       x:Class="WeatherApp.Views.Fragments.Weather_DetailedView"
+       Grid.Row="1"
+       HasShadow="True"
+       CornerRadius="10"
+       Margin="20,-40,20,0" Padding="0"
+       HeightRequest="120"
+       VerticalOptions="Start">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+            <Image Source="humidity.png" HeightRequest="25" HorizontalOptions="Center" />
+            <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding WeatherData.Humidity, StringFormat='{0}%'}" TextColor="{StaticResource PrimaryTextColor}"
+                       FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Humidity" TextColor="{StaticResource SecondaryTextColor}"
+                       FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Grid.Column="1" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+            <Image Source="wind.png" HeightRequest="25" HorizontalOptions="Center" />
+            <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding WeatherData.Wind.Display}" TextColor="{StaticResource PrimaryTextColor}"
+                       FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Wind" TextColor="{StaticResource SecondaryTextColor}"
+                       FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Grid.Column="2" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+            <Image Source="pressure.png" HeightRequest="25" HorizontalOptions="Center" />
+            <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding WeatherData.Pressure.Display}" TextColor="{StaticResource PrimaryTextColor}"
+                       FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Pressure" TextColor="{StaticResource SecondaryTextColor}"
+                       FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout Grid.Column="3" Orientation="Vertical" Spacing="10" HorizontalOptions="CenterAndExpand">
+            <Image Source="cloudiness.png" HeightRequest="25" HorizontalOptions="Center" />
+            <StackLayout Spacing="7" HorizontalOptions="CenterAndExpand">
+                <Label Text="{Binding WeatherData.Cloudiness, StringFormat='{0}%'}" TextColor="{StaticResource PrimaryTextColor}"
+                       FontSize="{StaticResource DetailedViewValue}" FontAttributes="Bold" HorizontalOptions="Center" />
+                <Label Text="Cloudiness" TextColor="{StaticResource SecondaryTextColor}"
+                       FontSize="{StaticResource DetailedViewDescription}" HorizontalOptions="Center" />
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</Frame>

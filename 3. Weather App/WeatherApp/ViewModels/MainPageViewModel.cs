@@ -14,6 +14,7 @@ namespace WeatherApp.ViewModels
     public class MainPageViewModel : BaseViewModel
     {
         public bool IsRefreshing { get; set; }
+        public String ActiveCity { get; set; }
 
         #region WeatherInfo
 
@@ -34,7 +35,8 @@ namespace WeatherApp.ViewModels
         {
             MenuCommand = new Command(Page.OpenCloseMenu);
             RefreshCommand = new Command(RefreshCommandHandler);
-            GetCurrentWeather().ContinueWith((task) => task);
+
+            GetCurrentWeather().GetAwaiter();
         }
 
         #region Visual Studio Shenanigan
@@ -42,7 +44,7 @@ namespace WeatherApp.ViewModels
         // For Visual Studio !! Not to be used in production
         // https://docs.microsoft.com/en-us/answers/questions/612910/binding-property-34fromicao34-not-found-on-34viewm.html
         public MainPageViewModel()
-        { throw new NotImplementedException(); }
+        { throw new NotImplementedException("Not meant to be used"); }
 
         #endregion Visual Studio Shenanigan
 
@@ -74,6 +76,7 @@ namespace WeatherApp.ViewModels
 
         private void MockThis()
         {
+            ActiveCity = "London";
             MainInfo = MockMainInfo();
             DetailedInfo = MockDetailedInfo();
             WeatherForecasts = MockWeatherData();

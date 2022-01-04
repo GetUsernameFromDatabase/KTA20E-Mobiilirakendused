@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.WeatherApp" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="30" />
-	<application android:label="Weather App"></application>
+	<application android:label="Weather App"
+				 android:supportsRtl="true"
+				 android:usesCleartextTraffic="true">
+	</application>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

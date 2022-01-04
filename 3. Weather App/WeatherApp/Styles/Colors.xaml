@@ -4,6 +4,9 @@
                     x:Class="WeatherApp.Styles.Colors">
     <Color x:Key="PrimaryColor">#552E9C</Color>
 
+    <Color x:Key="ActiveColor">#FFF</Color>
+    <Color x:Key="InactiveColor">#999999</Color>
+
     <Color x:Key="FailColor">#D04C41</Color>
     <Color x:Key="SuccessColor">#00AF49</Color>
 
@@ -13,4 +16,6 @@
     <!--#endregion-->
 
     <Color x:Key="PageBackgroundColor">GhostWhite</Color>
+    <Color x:Key="CardBackgroundColor">White</Color>
+    <Color x:Key="SelectedCardBackgroundColor">#8860d0</Color>
 </ResourceDictionary>

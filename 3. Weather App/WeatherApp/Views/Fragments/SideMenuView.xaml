@@ -23,6 +23,7 @@
                     <Label
                         Grid.Column="0"
                         Text="{Binding Icon}"
+                        FontFamily="FontAwesome"
                         HorizontalOptions="Center" />
                     <Label
                         Grid.Column="1"

@@ -62,4 +62,19 @@
       x:TypeArguments="x:Double"
       Android="15"
       iOS="15" />
+    <OnPlatform
+      x:Key="HeadlineFontSize"
+      x:TypeArguments="x:Double"
+      Android="23"
+      iOS="23" />
+    <OnPlatform
+      x:Key="ButtonFontSize"
+      x:TypeArguments="x:Double"
+      Android="14"
+      iOS="14" />
+    <OnPlatform
+      x:Key="AddButtonFontSize"
+      x:TypeArguments="x:Double"
+      Android="38"
+      iOS="38" />
 </ResourceDictionary>

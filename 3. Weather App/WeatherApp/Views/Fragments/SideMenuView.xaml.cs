@@ -26,9 +26,14 @@ namespace WeatherApp.Views.Fragments
 
         private async void SideMenuCommandHandler(string label)
         {
-            Debug.WriteLine(label);
-            await Task.Delay(200);
-            // Perform navigation
+            var houser = Parent.Parent.Parent as ContentPage;
+            ContentPage newPage = null;
+            switch (label)
+            {
+                case "Locations": newPage = new LocationsPage(); break;
+                case "Settings": newPage = new SettingsPage(); break;
+            }
+            await Navigation.PushAsync(new NavigationPage(newPage));
         }
     }
 }
