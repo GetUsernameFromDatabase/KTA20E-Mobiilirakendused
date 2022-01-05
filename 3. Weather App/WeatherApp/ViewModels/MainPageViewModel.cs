@@ -1,6 +1,6 @@
 ﻿using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -26,7 +26,7 @@ namespace WeatherApp.ViewModels
 
         public MainInfo MainInfo { get; set; }
         public DetailedInfo DetailedInfo { get; set; }
-        public List<WeatherForecast> WeatherForecasts { get; set; }
+        public ObservableCollection<WeatherForecast> WeatherForecasts { get; set; }
 
         #endregion WeatherInfo
 
@@ -98,55 +98,29 @@ namespace WeatherApp.ViewModels
             ApplyWeatherData(weatherData);
         }
 
+        #region Making Weather Info
+
         public void ApplyWeatherData(OWM_5Day3HourForecast weatherData)
         {
-            var wdCity = weatherData.city;
-            var wdCrnt = weatherData.list.First();
-            var wdWeather = wdCrnt.weather.First();
-            var wdMain = wdCrnt.main;
-            var wdWind = wdCrnt.wind;
-
-            var temp = new Temperature(wdMain.temp, TemperatureUnits.Celsius);
-            var city = new Models.City() { Name = wdCity.name, Country = wdCity.country };
-            var date = new Date(Time.UnixTimeStampToDateTime(wdCrnt.dt));
-            MainInfo = new MainInfo(city, temp, date, wdWeather.icon) { Description = wdWeather.description };
-
-            var wind = new Models.Weather.Wind(wdWind.speed, WindUnits.Metric);
-            var pressure = new Pressure(wdMain.pressure, PressureUnits.hectopascal);
-            DetailedInfo = new DetailedInfo(wind, pressure)
-            {
-                Cloudiness = wdCrnt.clouds.all,
-                Humidity = wdMain.humidity,
-            };
-
-            List<WeatherForecast> weatherList = new List<WeatherForecast> { };
-            var iterateDay = 24 / 3;
-            for (int i = iterateDay; i < weatherData.list.Length; i += iterateDay)
-            {
-                var wdAfterADay = weatherData.list[i];
-                var iTemp = new Temperature(wdAfterADay.main.temp, TemperatureUnits.Celsius);
-                var iUnixTime = wdAfterADay.dt;
-                var icon = wdAfterADay.weather.First().icon;
-
-                var weatherForecast = new WeatherForecast(iTemp, iUnixTime, icon);
-                weatherList.Add(weatherForecast);
-            }
-            WeatherForecasts = weatherList;
+            MainInfo = MakeMainInfo(weatherData);
+            DetailedInfo = MakeDetailedInfo(weatherData.list.First());
+            WeatherForecasts = MakeWeatherData(weatherData);
         }
-
-        #region Mocking Weather Info
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
             "IDE0051:Remove unused private members", Justification = "For Development")]
         private Task MockThis()
         {
-            MainInfo = MockMainInfo();
-            DetailedInfo = MockDetailedInfo();
-            WeatherForecasts = MockWeatherData();
+            MainInfo = MakeMainInfo();
+            DetailedInfo = MakeDetailedInfo();
+            WeatherForecasts = MakeWeatherData();
             return Task.Delay(1337);
         }
 
-        private MainInfo MockMainInfo()
+        #region Make MainInfo
+
+        // Mock
+        private MainInfo MakeMainInfo()
         {
             var temp = new Temperature(285.15, TemperatureUnits.Kelvin);
             temp.ConvertTo(TemperatureUnits.Celsius);
@@ -157,7 +131,24 @@ namespace WeatherApp.ViewModels
             return new MainInfo(city, temp, date, "09d") { Description = desc };
         }
 
-        private DetailedInfo MockDetailedInfo()
+        private MainInfo MakeMainInfo(OWM_5Day3HourForecast weatherData)
+        {
+            var wdCity = weatherData.city;
+            var wdCrnt = weatherData.list.First();
+            var wdWeather = wdCrnt.weather.First();
+
+            var temp = new Temperature(wdCrnt.main.temp, TemperatureUnits.Celsius);
+            var city = new Models.City() { Name = wdCity.name, Country = wdCity.country };
+            var date = new Date(Time.UnixTimeStampToDateTime(wdCrnt.dt));
+            return new MainInfo(city, temp, date, wdWeather.icon) { Description = wdWeather.description };
+        }
+
+        #endregion Make MainInfo
+
+        #region Make DetailedInfo
+
+        // Mock
+        private DetailedInfo MakeDetailedInfo()
         {
             var wind = new Models.Weather.Wind(2.6, WindUnits.Metric);
             var pressure = new Pressure(1011, PressureUnits.hectopascal);
@@ -169,17 +160,36 @@ namespace WeatherApp.ViewModels
             };
         }
 
-        private List<WeatherForecast> MockWeatherData()
+        private DetailedInfo MakeDetailedInfo(WeatherApp.Models.Responses.List wdCrnt)
+        {
+            var wdMain = wdCrnt.main;
+            var wdWind = wdCrnt.wind;
+
+            var wind = new Models.Weather.Wind(wdWind.speed, WindUnits.Metric);
+            var pressure = new Pressure(wdMain.pressure, PressureUnits.hectopascal);
+            return new DetailedInfo(wind, pressure)
+            {
+                Cloudiness = wdCrnt.clouds.all,
+                Humidity = wdMain.humidity,
+            };
+        }
+
+        #endregion Make DetailedInfo
+
+        #region Make ObservableCollection<WeatherForecast>
+
+        // Mock
+        private ObservableCollection<WeatherForecast> MakeWeatherData()
         {
             var TempUnit = TemperatureUnits.Kelvin;
-            List<WeatherForecast> weatherList = new List<WeatherForecast>
+            ObservableCollection<WeatherForecast> weatherList = new ObservableCollection<WeatherForecast>
             {
-                new WeatherForecast(new Temperature(295.15, TempUnit), 1560679200, "10d"),
-                new WeatherForecast(new Temperature(294.15, TempUnit), 1560765600, "09d"),
-                new WeatherForecast(new Temperature(293.15, TempUnit), 1560852000, "04d"),
-                new WeatherForecast(new Temperature(285.15, TempUnit), 1560938400, "04d"),
-                new WeatherForecast(new Temperature(290.15, TempUnit), 1561024800, "10d"),
-                new WeatherForecast(new Temperature(293.15, TempUnit), 1561111200, "09d"),
+                new WeatherForecast(new Temperature(295.15, TempUnit), MakeDetailedInfo(), 1560679200, "10d"),
+                new WeatherForecast(new Temperature(294.15, TempUnit), MakeDetailedInfo(), 1560765600, "09d"),
+                new WeatherForecast(new Temperature(293.15, TempUnit), MakeDetailedInfo(), 1560852000, "04d"),
+                new WeatherForecast(new Temperature(285.15, TempUnit), MakeDetailedInfo(), 1560938400, "04d"),
+                new WeatherForecast(new Temperature(290.15, TempUnit), MakeDetailedInfo(), 1561024800, "10d"),
+                new WeatherForecast(new Temperature(293.15, TempUnit), MakeDetailedInfo(), 1561111200, "09d"),
             };
 
             foreach (var item in weatherList)
@@ -187,6 +197,25 @@ namespace WeatherApp.ViewModels
             return weatherList;
         }
 
-        #endregion Mocking Weather Info
+        private ObservableCollection<WeatherForecast> MakeWeatherData(OWM_5Day3HourForecast weatherData)
+        {
+            ObservableCollection<WeatherForecast> weatherList = new ObservableCollection<WeatherForecast> { };
+            var iterateDay = 24 / 3;
+            for (int i = iterateDay; i < weatherData.list.Length; i += iterateDay)
+            {
+                var item = weatherData.list[i];
+                var temp = new Temperature(item.main.temp, TemperatureUnits.Celsius);
+                var icon = item.weather.First().icon;
+                var detailedInfo = MakeDetailedInfo(item);
+
+                var weatherForecast = new WeatherForecast(temp, detailedInfo, item.dt, icon);
+                weatherList.Add(weatherForecast);
+            }
+            return weatherList;
+        }
+
+        #endregion Make ObservableCollection<WeatherForecast>
+
+        #endregion Making Weather Info
     }
 }

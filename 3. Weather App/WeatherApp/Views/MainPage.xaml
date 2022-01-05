@@ -29,7 +29,7 @@
                 Command="{Binding RefreshCommand}">
             <ScrollView>
                 <!--#region MainInfo -->
-                <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource PageBackgroundColor}">
+                <Grid VerticalOptions="FillAndExpand" BackgroundColor="{StaticResource PageBackgroundColor}" >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -80,39 +80,42 @@
                     <!--#endregion-->
 
                     <!--#region DailyWeatherForecasts -->
-                    <StackLayout Grid.Row="2" BackgroundColor="Transparent" Orientation="Horizontal" Margin="20, 20, 0, 0" HorizontalOptions="Start">
+                    <StackLayout Grid.Row="2" BackgroundColor="Transparent" Orientation="Vertical" Margin="20,20,20,75" HorizontalOptions="FillAndExpand">
                         <Label Text="Daily" FontSize="{StaticResource HeaderSection}" VerticalOptions="Center" TextColor="{StaticResource PrimaryColor}" />
-                    </StackLayout>
-                    <ListView x:Name="WeatherForecastList" ItemsSource="{Binding WeatherForecasts}" SeparatorVisibility="None"
-                              Grid.Row="3" Margin="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
-                                        <Grid HeightRequest="50" MinimumHeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
 
-                                            <Label Text="{Binding DateDisplay}" TextColor="{StaticResource SecondaryTextColor}"
+                        <StackLayout BindableLayout.ItemsSource="{Binding WeatherForecasts}" HorizontalOptions="Fill">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <xct:Expander ExpandAnimationEasing="{x:Static Easing.CubicIn}" CollapseAnimationEasing="{x:Static Easing.CubicOut}" >
+                                        <xct:Expander.Header>
+                                            <Frame BackgroundColor="White" BorderColor="#F0F0F0" Padding="5" Margin="0,0,0,5" HasShadow="False">
+                                                <Grid HeightRequest="50" MinimumHeightRequest="50" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Text="{Binding DateDisplay}" TextColor="{StaticResource SecondaryTextColor}"
                                                    FontSize="{StaticResource DailyForecastDate}" VerticalOptions="Center" Margin="20,0" />
 
-                                            <Image Grid.Column="1" Source="{Binding IconPath}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                    <Image Grid.Column="1" Source="{Binding IconPath}" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center" />
 
-                                            <StackLayout Grid.Column="2" HeightRequest="50" Orientation="Horizontal" Margin="20,0" HorizontalOptions="End" VerticalOptions="Center">
-                                                <Label Text="{Binding Temperature.DisplayValue}" TextColor="{StaticResource PrimaryTextColor}"
-                                                       FontSize="{StaticResource DailyForecastTempValue}" FontAttributes="Bold" VerticalOptions="Start" />
-                                                <Label Text="{Binding Temperature.Unit}" TextColor="{StaticResource PrimaryTextColor}"
+                                                    <StackLayout Grid.Column="2" HeightRequest="50" Orientation="Horizontal" Margin="20,0" HorizontalOptions="End" VerticalOptions="Center">
+                                                        <Label Text="{Binding Temperature.DisplayValue}" TextColor="{StaticResource PrimaryTextColor}"
+                                                       FontSize="{StaticResource DailyForecastTempValue}" FontAttributes="Bold" VerticalOptions="Center" />
+                                                        <Label Text="{Binding Temperature.Unit}" TextColor="{StaticResource PrimaryTextColor}"
                                                        FontSize="{StaticResource DailyForecastTempUnit}" VerticalOptions="Center" />
-                                            </StackLayout>
-                                        </Grid>
-                                    </Frame>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                                    </StackLayout>
+                                                </Grid>
+                                            </Frame>
+                                        </xct:Expander.Header>
+                                        <fragments:Weather_DetailedView WeatherData="{Binding DetailedInfo}" VerticalOptions="End" Margin="0,0,0,10" />
+                                    </xct:Expander>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+
                     <!--#endregion-->
                 </Grid>
             </ScrollView>
