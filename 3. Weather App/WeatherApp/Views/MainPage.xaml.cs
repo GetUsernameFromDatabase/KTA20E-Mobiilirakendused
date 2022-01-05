@@ -12,20 +12,12 @@ namespace WeatherApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
+        public MainPageViewModel viewModel => this.BindingContext as MainPageViewModel;
+
         public MainPage()
         {
             BindingContext = new MainPageViewModel(this);
             InitializeComponent();
-            ShowLocationDialogueIfNeeded();
-        }
-
-        private async void ShowLocationDialogueIfNeeded()
-        {
-            var locations = await SecureStorage.GetAsync("locations");
-            if (locations == null)
-            {
-                await PopupNavigation.Instance.PushAsync(new AddLocationDialog());
-            }
         }
 
         #region Command Handlers

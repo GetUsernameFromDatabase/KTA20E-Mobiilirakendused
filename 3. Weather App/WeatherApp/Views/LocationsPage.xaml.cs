@@ -8,7 +8,7 @@ namespace WeatherApp.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LocationsPage : ContentPage
     {
-        private LocationsPageViewModel viewModel => this.BindingContext as LocationsPageViewModel;
+        public LocationsPageViewModel viewModel => this.BindingContext as LocationsPageViewModel;
 
         public LocationsPage()
         {

@@ -1,12 +1,15 @@
-﻿using Newtonsoft.Json;
+﻿using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using WeatherApp.Helpers;
 using WeatherApp.Models;
+using WeatherApp.Models.Responses;
 using WeatherApp.Services;
 using WeatherApp.Views;
+using WeatherApp.Views.Dialogs;
 using Xamarin.CommunityToolkit.UI.Views;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WeatherApp.ViewModels.Dialogs
@@ -14,6 +17,8 @@ namespace WeatherApp.ViewModels.Dialogs
     public class AddLocationDialogViewModel : BaseViewModel
     {
         #region Private & Protected
+
+        private AddLocationDialog Page;
 
         private List<LocationModel> _locations;
 
@@ -28,11 +33,15 @@ namespace WeatherApp.ViewModels.Dialogs
 
         #region Constructors
 
-        public AddLocationDialogViewModel()
+        public AddLocationDialogViewModel(AddLocationDialog Page)
         {
+            this.Page = Page;
             UseCurrentLocationCommand = new Command<string>(UseCurrentLocationCommandHandler);
             MainState = LayoutState.Loading;
         }
+
+        public AddLocationDialogViewModel()
+        { throw new NotImplementedException("Not meant to be used"); }
 
         #endregion Constructors
 
@@ -40,10 +49,7 @@ namespace WeatherApp.ViewModels.Dialogs
 
         public async void OnDialogOpened()
         {
-            var listLocJson = await SecureStorage.GetAsync("locations");
-            _locations = !string.IsNullOrEmpty(listLocJson)
-                ? JsonConvert.DeserializeObject<List<LocationModel>>(listLocJson)
-                : new List<LocationModel>();
+            _locations = await Locations.GetLocationsFromStorage() ?? new List<LocationModel>();
             MainState = LayoutState.None;
         }
 
@@ -53,7 +59,6 @@ namespace WeatherApp.ViewModels.Dialogs
             HasError = false;
 
             var weatherData = WeatherService.Get5DayForecast(locationName).Result;
-            Console.WriteLine(weatherData);
             if (weatherData == null)
             {
                 HasError = true;
@@ -71,11 +76,34 @@ namespace WeatherApp.ViewModels.Dialogs
                 Selected = false,
             };
 
+            await AddLocation(location);
+            UpdatePages(weatherData).GetAwaiter();
+
+            MainState = LayoutState.None;
+            // Closes self
+            await PopupNavigation.Instance.PopAsync();
+        }
+
+        private Task UpdatePages(OWM_5Day3HourForecast weatherData)
+        {
+            var navPage = App.Current.MainPage as NavigationPage;
+
+            var mainPage = navPage.RootPage as MainPage;
+            mainPage.viewModel.ApplyWeatherData(weatherData);
+
+            var crntPage = navPage.CurrentPage as NavigationPage;
+            if (crntPage?.RootPage is LocationsPage locPage)
+                return locPage.viewModel.GetPlacemarkAndLocation();
+
+            return null;
+        }
+
+        private Task AddLocation(LocationModel location)
+        {
             _locations.Add(location);
             _locations.ForEach(l => l.Selected = false);
             _locations.First(l => l.Locality == location.Locality).Selected = true;
-            await SecureStorage.SetAsync("locations", JsonConvert.SerializeObject(_locations));
-            MainState = LayoutState.None;
+            return Locations.SaveLocationsToStorage(_locations);
         }
 
         #endregion Dialog

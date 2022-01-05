@@ -13,8 +13,8 @@ namespace WeatherApp.Views.Fragments
         public ICommand SideMenuCommand { get; set; }
 
         public MenuItemModel[] MenuItems => new MenuItemModel[] {
-            new MenuItemModel() { Label = "Locations", Icon = "⚙️" },
-            new MenuItemModel() { Label = "Settings", Icon = "📍" } ,
+            new MenuItemModel() { Label = "Locations", Icon = "\uf3c5" },
+            new MenuItemModel() { Label = "Settings", Icon = "\uf013" } ,
         };
 
         public SideMenuView()

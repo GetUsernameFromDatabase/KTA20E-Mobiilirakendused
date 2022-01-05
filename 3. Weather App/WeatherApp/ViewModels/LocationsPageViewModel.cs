@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WeatherApp.Models;
+using WeatherApp.Services;
 using WeatherApp.Views;
 using WeatherApp.Views.Dialogs;
 using Xamarin.CommunityToolkit.UI.Views;
@@ -55,19 +55,24 @@ namespace WeatherApp.ViewModels
         private async void AddLocationCommandHandler()
         {
             await PopupNavigation.Instance.PushAsync(new AddLocationDialog());
-            await GetPlacemarkAndLocation();
         }
 
         private async void SelectLocationCommandHandler(string selectedLocality)
         {
             MainState = LayoutState.Loading;
-
-            Locations.ForEach(l => l.Selected = false);
-            Locations.First(l => l.Locality == selectedLocality).Selected = true;
+            foreach (var l in Locations)
+            {
+                if (l.Locality == selectedLocality)
+                {
+                    l.Selected = true;
+                }
+                else l.Selected = false;
+            }
             Locations.RemoveAt(Locations.Count - 1);
 
-            await SecureStorage.SetAsync("locations", JsonConvert.SerializeObject(Locations));
-            await GetPlacemarkAndLocation();
+            await Helpers.Locations.SaveLocationsToStorage(Locations);
+            GetPlacemarkAndLocation().GetAwaiter();
+            UpdateMainPage(selectedLocality);
 
             MainState = LayoutState.None;
         }
@@ -83,12 +88,15 @@ namespace WeatherApp.ViewModels
                 {
                     var index = Locations.IndexOf(item);
                     var nextIndex = index < Locations.Count - 2 ? index + 1 : 0;
-                    Locations[nextIndex].Selected = true;
+                    var nextItem = Locations[nextIndex];
+
+                    nextItem.Selected = true;
+                    UpdateMainPage(nextItem.Locality);
                 }
                 Locations.Remove(item);
                 Locations.RemoveAt(Locations.Count - 1);
 
-                await SecureStorage.SetAsync("locations", JsonConvert.SerializeObject(Locations));
+                await Helpers.Locations.SaveLocationsToStorage(Locations);
                 await GetPlacemarkAndLocation();
             }
 
@@ -97,7 +105,15 @@ namespace WeatherApp.ViewModels
 
         #endregion Command Handlers
 
-        #region Private Methods
+        #region Methods
+
+        private void UpdateMainPage(string selectedLocality)
+        {
+            var weatherData = WeatherService.Get5DayForecast(selectedLocality).Result;
+            var navPage = App.Current.MainPage as NavigationPage;
+            var mainPage = navPage.RootPage as MainPage;
+            mainPage.viewModel.ApplyWeatherData(weatherData);
+        }
 
         public async void OnNavigatedTo()
         {
@@ -113,10 +129,7 @@ namespace WeatherApp.ViewModels
             try
             {
                 Locations.Clear();
-
-                var listLocJson = await SecureStorage.GetAsync("locations");
-                var locations = JsonConvert.DeserializeObject<List<LocationModel>>(listLocJson);
-
+                var locations = await WeatherApp.Helpers.Locations.GetLocationsFromStorage();
                 locations.ForEach(l => Locations.Add(l));
                 Locations.Add(new LocationModel());
             }
@@ -126,6 +139,6 @@ namespace WeatherApp.ViewModels
             }
         }
 
-        #endregion Private Methods
+        #endregion Methods
     }
 }

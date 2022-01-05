@@ -8,6 +8,7 @@ namespace WeatherApp.Models
         public IMeasurementUnits MeasurementUnit { get; protected set; }
 
         public string Display => GetDisplay();
+        public string DisplayValue => Math.Round(Value, 2).ToString();
         public double Value { get; private set; }
         public string Unit { get; private set; }
 

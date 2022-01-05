@@ -1,11 +1,5 @@
 ﻿using Rg.Plugins.Popup.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeatherApp.ViewModels.Dialogs;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace WeatherApp.Views.Dialogs
@@ -18,7 +12,7 @@ namespace WeatherApp.Views.Dialogs
         public AddLocationDialog()
         {
             InitializeComponent();
-            this.BindingContext = new AddLocationDialogViewModel();
+            this.BindingContext = new AddLocationDialogViewModel(this);
         }
 
         protected override void OnAppearing()

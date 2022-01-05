@@ -4,13 +4,16 @@ namespace WeatherApp.Models
 {
     public class Date
     {
+        public bool amPM = false;
+
         public DateTime DateTime { get; private set; }
-        public bool amPM = true;
-        public string Short => DateTime.ToString("dddd, dd");
+        public DateTime LocalTime => DateTime.ToLocalTime();
+
+        public string Short => LocalTime.ToString("dddd, dd");
 
         public string Detailed => amPM ?
-            DateTime.ToString("MMMM dd, hh:mm tt") :
-            DateTime.ToString("MMMM dd, HH:mm");
+            LocalTime.ToString("MMMM dd, hh:mm tt") :
+            LocalTime.ToString("MMMM dd, HH:mm");
 
         public Date(DateTime DateTime)
         {
