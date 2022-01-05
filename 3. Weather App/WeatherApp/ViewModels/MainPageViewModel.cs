@@ -37,6 +37,8 @@ namespace WeatherApp.ViewModels
 
         #endregion Commands
 
+        #region Contructor
+
         public MainPageViewModel(MainPage Page)
         {
             MenuCommand = new Command(Page.OpenCloseMenu);
@@ -45,24 +47,14 @@ namespace WeatherApp.ViewModels
             GetCurrentWeather().GetAwaiter();
         }
 
-        private async void ShowAddLocationDialog()
-        {
-            var dialog = new AddLocationDialog();
-            // New Location needs to be added
-            dialog.CloseWhenBackgroundIsClicked = false;
-            await PopupNavigation.Instance.PushAsync(dialog);
-        }
-
-        #region Visual Studio Shenanigan
-
         // For Visual Studio !! Not to be used in production
         // https://docs.microsoft.com/en-us/answers/questions/612910/binding-property-34fromicao34-not-found-on-34viewm.html
         public MainPageViewModel()
         { throw new NotImplementedException("Not meant to be used"); }
 
-        #endregion Visual Studio Shenanigan
+        #endregion Contructor
 
-        #region Command Handlers
+        #region CommandHandlers
 
         private async void RefreshCommandHandler()
         {
@@ -77,7 +69,15 @@ namespace WeatherApp.ViewModels
             IsRefreshing = false;
         }
 
-        #endregion Command Handlers
+        #endregion CommandHandlers
+
+        private async void ShowAddLocationDialog()
+        {
+            var dialog = new AddLocationDialog();
+            // New Location needs to be added
+            dialog.CloseWhenBackgroundIsClicked = false;
+            await PopupNavigation.Instance.PushAsync(dialog);
+        }
 
         private async Task GetCurrentWeather()
         {
@@ -98,6 +98,33 @@ namespace WeatherApp.ViewModels
             ApplyWeatherData(weatherData);
         }
 
+        public void ConvertToPreferredUnits()
+        {
+            var Units = Preferences.Get("units", "metric");
+            string tempUnit, windUnit;
+            switch (Units)
+            {
+                case "imperial":
+                    tempUnit = TemperatureUnits.Fahrenheit;
+                    windUnit = WindUnits.Imperial;
+                    break;
+
+                default:
+                    tempUnit = TemperatureUnits.Celsius;
+                    windUnit = WindUnits.Metric;
+                    break;
+            }
+
+            MainInfo.Temperature.ConvertTo(tempUnit);
+            DetailedInfo.Wind.ConvertTo(windUnit);
+
+            foreach (var item in WeatherForecasts)
+            {
+                item.Temperature.ConvertTo(tempUnit);
+                item.DetailedInfo.Wind.ConvertTo(windUnit);
+            }
+        }
+
         #region Making Weather Info
 
         public void ApplyWeatherData(OWM_5Day3HourForecast weatherData)
@@ -105,6 +132,7 @@ namespace WeatherApp.ViewModels
             MainInfo = MakeMainInfo(weatherData);
             DetailedInfo = MakeDetailedInfo(weatherData.list.First());
             WeatherForecasts = MakeWeatherData(weatherData);
+            ConvertToPreferredUnits();
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality",
@@ -114,6 +142,7 @@ namespace WeatherApp.ViewModels
             MainInfo = MakeMainInfo();
             DetailedInfo = MakeDetailedInfo();
             WeatherForecasts = MakeWeatherData();
+            ConvertToPreferredUnits();
             return Task.Delay(1337);
         }
 

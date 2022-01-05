@@ -1,13 +1,16 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace WeatherApp.Models
 {
-    public class Measurement
+    public class Measurement : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public (double, string) InitalMeasurment;
         public IMeasurementUnits MeasurementUnit { get; protected set; }
 
-        public string Display => GetDisplay();
+        public string Display => $"{Math.Round(Value, 2)} {Unit}";
         public string DisplayValue => Math.Round(Value, 2).ToString();
         public double Value { get; private set; }
         public string Unit { get; private set; }
@@ -35,11 +38,6 @@ namespace WeatherApp.Models
         {
             this.Value = InitalMeasurment.Item1;
             this.Unit = InitalMeasurment.Item2;
-        }
-
-        public string GetDisplay()
-        {
-            return string.Format("{0} {1}", Math.Round(Value, 2), Unit);
         }
     }
 }

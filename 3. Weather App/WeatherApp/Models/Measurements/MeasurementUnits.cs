@@ -10,6 +10,7 @@ namespace WeatherApp.Models
         double ConvertFromTo(double value, string from, string to)
         {
             if (UnitConversions == null) throw new NotImplementedException();
+            if (from == to) return value;
             int? toInd = null, fromInd = null;
 
             for (int i = 0; i < Units.Length; i++)

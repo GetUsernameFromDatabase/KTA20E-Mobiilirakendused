@@ -1,5 +1,7 @@
 ﻿using System;
+using WeatherApp.Models.Weather;
 using WeatherApp.Views;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -40,15 +42,32 @@ namespace WeatherApp.ViewModels
         private void MetricCommandHandler()
         {
             Units = "metric";
-            Preferences.Set("units", Units);
+            UnitChanged();
         }
 
         private void ImperialCommandHandler()
         {
             Units = "imperial";
-            Preferences.Set("units", Units);
+            UnitChanged();
         }
 
         #endregion Command Handlers
+
+        private void UnitChanged()
+        {
+            Preferences.Set("units", Units);
+            var navPage = App.Current.MainPage as NavigationPage;
+            var mainPage = navPage.RootPage as MainPage;
+            mainPage.viewModel.ConvertToPreferredUnits();
+        }
+
+        public void OnNavigatedTo()
+        {
+            MainState = LayoutState.Loading;
+
+            Units = Preferences.Get("units", "metric");
+
+            MainState = LayoutState.None;
+        }
     }
 }
