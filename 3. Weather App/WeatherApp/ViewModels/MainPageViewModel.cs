@@ -182,14 +182,15 @@ namespace WeatherApp.ViewModels
         private ObservableCollection<WeatherForecast> MakeWeatherData()
         {
             var TempUnit = TemperatureUnits.Kelvin;
+            var DI_Mock = MakeDetailedInfo(); // Detailed Info Mock
             ObservableCollection<WeatherForecast> weatherList = new ObservableCollection<WeatherForecast>
             {
-                new WeatherForecast(new Temperature(295.15, TempUnit), MakeDetailedInfo(), 1560679200, "10d"),
-                new WeatherForecast(new Temperature(294.15, TempUnit), MakeDetailedInfo(), 1560765600, "09d"),
-                new WeatherForecast(new Temperature(293.15, TempUnit), MakeDetailedInfo(), 1560852000, "04d"),
-                new WeatherForecast(new Temperature(285.15, TempUnit), MakeDetailedInfo(), 1560938400, "04d"),
-                new WeatherForecast(new Temperature(290.15, TempUnit), MakeDetailedInfo(), 1561024800, "10d"),
-                new WeatherForecast(new Temperature(293.15, TempUnit), MakeDetailedInfo(), 1561111200, "09d"),
+                new WeatherForecast(new Temperature(295.15, TempUnit), DI_Mock, 1560679200, "10d"),
+                new WeatherForecast(new Temperature(294.15, TempUnit), DI_Mock, 1560765600, "09d"),
+                new WeatherForecast(new Temperature(293.15, TempUnit), DI_Mock, 1560852000, "04d"),
+                new WeatherForecast(new Temperature(285.15, TempUnit), DI_Mock, 1560938400, "04d"),
+                new WeatherForecast(new Temperature(290.15, TempUnit), DI_Mock, 1561024800, "10d"),
+                new WeatherForecast(new Temperature(293.15, TempUnit), DI_Mock, 1561111200, "09d"),
             };
 
             foreach (var item in weatherList)
