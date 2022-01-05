@@ -6,8 +6,6 @@ App that saves and displays notes.
 
 ### Main
 
-![](../+Examples/Notes/Main_Pixel2.png)
-
-### Note Edit
-
-![](../+Examples/Notes/NoteEdit_Pixel2.png)
+|                  Main                  |                 Note Edit                  |
+| :------------------------------------: | :----------------------------------------: |
+| ![](../+Examples/Notes/Main_Pixel2.png) | ![](../+Examples/Notes/NoteEdit_Pixel2.png) |
